@@ -115,3 +115,6 @@ def test_process_file_exception_handling(ingestao_instance, tmp_path):
     with mock.patch("builtins.open", side_effect=Exception("Erro simulado")):
         result = ingestao_instance.process_file(str(file_path))
         assert result is None
+
+
+        
