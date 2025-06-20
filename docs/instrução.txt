@@ -8,14 +8,14 @@
 
 ## 2. Arquivos para Análise (em ordem de prioridade)
 ```plaintext
-src/C.limpeza_normalizacao
+src/I.indexacao_vetorial
 ├── __init__.py
-├── limpeza_normalizacao.py
+├── indexacao_vetorial.py
 ├── help.md
 ├── testeinstrucoes.md
 ```
 
-Considere o arquivo Help para entender sobre o arquivo
-leia as instruções para teste no arquivo: testeintrucoes.md
+Considere o arquivo Help para entender sobre o arquivo  .py
+leia as instruções no arquivo: testeintrucoes.md para construir os testes para o .py
 
-Objetivo gerar um arquivo.py, que utiliza o framework pytest, para fazer testes completo para o arquivo python que está no diretorio
+Objetivo é gerar um arquivo .py, que utiliza o framework pytest, para fazer testes completo para o arquivo python que está no diretorio

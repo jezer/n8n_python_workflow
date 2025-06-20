@@ -3,6 +3,10 @@ import numpy as np
 import os
 import logging
 from typing import List, Dict, Any, Optional
+import faiss as default_faiss
+import os as default_os
+import json as default_json
+logger = logging.getLogger(__name__)
 
 class IndexacaoVetorial:
     """
