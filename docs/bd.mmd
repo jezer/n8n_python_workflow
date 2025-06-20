@@ -1,0 +1,29 @@
+
+flowchart TD
+    A[Ingestão] --> B[Segmentação]
+    B --> C[Limpeza]
+    C --> D[Chunking]
+    D --> E[Classificação]
+    E --> F[Grafo de Conhecimento]
+    F --> G[QA Gerado]
+    G --> H[Embeddings]
+    H --> I[Indexação Vetorial]
+    I --> J[Metadados]
+    J --> K[Hybrid Retriever]
+    K --> L[Reranking]
+    L --> M[LLM com RAG]
+    M --> N[Avaliação]
+    N --> O[Fine-tuning Retriever]
+    O --> P[Atualização Incremental]
+    P --> Q[Otimização de Prompts]
+    Q --> R[Dashboard]
+    R --> S[Alertas]
+
+    %% Pontos de persistência Supabase
+    F -- salva triplas --> SB1[(Supabase)]
+    G -- salva QA --> SB1
+    H -- salva embeddings --> SB1
+    J -- opcional: salva metadados --> SB1
+    N -- opcional: salva avaliações --> SB1
+    R -- opcional: salva métricas --> SB1
+    S -- opcional: salva alertas --> SB1

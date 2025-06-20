@@ -1,0 +1,1 @@
+from .geracao_qa import GeracaoQA

@@ -1,0 +1,1 @@
+from .metadados_enriquecidos import MetadadosEnriquecidos

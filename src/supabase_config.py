@@ -1,0 +1,3 @@
+SUPABASE_URL = "https://<SEU-PROJETO>.supabase.co"
+SUPABASE_KEY = "<SUA-CHAVE-API>"
+SUPABASE_SCHEMA = "public"

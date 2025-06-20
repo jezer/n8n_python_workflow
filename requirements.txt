@@ -1,0 +1,15 @@
+numpy
+pandas
+scikit-learn
+transformers
+torch
+spaCy
+faiss-cpu
+tqdm
+pillow
+opencv-python
+pytest
+pytest-cov
+jupyter
+matplotlib
+seaborn

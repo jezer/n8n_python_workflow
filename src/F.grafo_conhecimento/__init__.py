@@ -1,0 +1,1 @@
+from .grafo_conhecimento import GrafoConhecimento

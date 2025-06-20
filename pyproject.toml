@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "n8n-python-workflow"
+version = "0.1.0"
+description = "A library for processing and managing workflows in n8n using Python."
+authors = ["Jezer Portilho jezer.portilho@gmail.com"]
+license = "MIT"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+# Add other dependencies here as needed
+
+[tool.poetry.dev-dependencies]
+# Add development dependencies here as needed
+
+[build]
+wheel = { universal = true }

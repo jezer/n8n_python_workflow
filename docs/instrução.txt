@@ -1,0 +1,21 @@
+
+# Instruções para Análise de Código e Geração de Artefatos
+
+## 1. Contexto e Pré-requisitos
+• **Diagrama de Fluxo**: Consulte `fluxo.mmd` para entender a sequência lógica do sistema  
+• **Código Principal**: Analise `main.py` como ponto de entrada da aplicação  
+• **Estrutura Existente**: Considere a organização atual do workspace (pastas/arquivos)  
+
+## 2. Arquivos para Análise (em ordem de prioridade)
+```plaintext
+src/C.limpeza_normalizacao
+├── __init__.py
+├── limpeza_normalizacao.py
+├── help.md
+├── testeinstrucoes.md
+```
+
+Considere o arquivo Help para entender sobre o arquivo
+leia as instruções para teste no arquivo: testeintrucoes.md
+
+Objetivo gerar um arquivo.py, que utiliza o framework pytest, para fazer testes completo para o arquivo python que está no diretorio

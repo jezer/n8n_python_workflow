@@ -1,0 +1,1 @@
+from .indexacao_vetorial import IndexacaoVetorial

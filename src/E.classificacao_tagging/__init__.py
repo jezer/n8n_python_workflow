@@ -1,0 +1,1 @@
+from .classificacao_tagging import ClassificacaoTagging
