@@ -1,0 +1,48 @@
+
+graph TD
+    direction TB
+    A[Start] --> B{"Tipo de Ação? | context:CHOICE"}
+  %% Cada nó de escolha inclui, após pipe, a definição de context e o template
+    subgraph " ação "
+        B -->|agendar| C["Definir Data|context:AGENDAR|prompt:Forneça Dia, Mês e Ano no formato YYYY-MM-DD."]
+            L --> |"Não tem o dia do agendamento" | C
+        B -->|quiosque| D["Definir Quiosque|context:QUIOSQUE|prompt:Escolha apenas '1', '2' ou '3'."]
+            L --> |"Não tem o quiosque do agendamento" | D
+        B -->|confirmar| E["Confirmação|context:CONFIRMAR|prompt:Responda apenas 'sim' ou 'não'."]
+            L --> |"Não tem a confirmação do agendamento" | E
+        subgraph " validar se tem todas respostas"
+                F -->|Obrigatorio| I["observar se tem resposta do dia do agendamento"]
+                G -->|Obrigatorio| J["observar se tem resposta do quiosque do agendamento"]
+                H -->|Obrigatorio| K["observar se tem resposta da confirmação do agendamento"]
+        end
+
+    end
+    subgraph " resposta "
+        direction TB
+        C --> F[Pedir Dia, Mês, Ano]
+        D --> G[Pedir Quiosque: 1/2/3]
+        E --> H[Pedir Resposta: sim/não]
+    end
+
+
+
+ 
+    subgraph "Finalizar"
+        I --> L{"Se tiver as tres respostas"} 
+        J --> L{"Se tiver as tres respostas"} 
+        K --> L{"Se tiver as tres respostas"}
+        L -->|"tem as tres respostas" | M[Finalizar Agendamento]
+    end
+
+   %% Estilização
+    classDef preprocess fill:#f0f9ff,stroke:#1e40af,stroke-width:2px;
+    classDef knowledge fill:#e0f2fe,stroke:#1e40af,stroke-width:2px;
+    classDef rag fill:#dbeafe,stroke:#1e3a8a,stroke-width:2px;
+    classDef eval fill:#fef9c3,stroke:#ca8a04,stroke-width:2px;
+    classDef monitor fill:#ffedd5,stroke:#ea580c,stroke-width:2px;
+
+    class A,B,C,D,E preprocess;
+    class F,G,H,I,J knowledge;
+    class K,L,M rag;
+    class N,O,P,Q eval;
+    class R,S monitor;

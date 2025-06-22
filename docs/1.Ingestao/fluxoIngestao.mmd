@@ -1,0 +1,86 @@
+sequenceDiagram
+    %% Diagrama de Sequência para o Pipeline de Ingestão de Dados
+    %% Gerado a partir da análise de /src/1.ingestao/main_ingestao.py
+    %% IA: Este diagrama descreve o fluxo de orquestração principal.
+    %% As letras (A, B, C...) correspondem aos módulos na estrutura de pastas.
+
+    participant User
+    participant main as "main_ingestao.py"
+    participant A as "A.IngestaoDeArquivos"
+    participant B as "B.SegmentadorUnificado"
+    participant C as "C.LimpezaNormalizacao"
+    participant D as "D.ChunkingInteligente"
+    participant E as "E.ClassificacaoTagging"
+    participant F as "F.GrafoConhecimento"
+    participant G as "G.GeracaoQA"
+    participant H as "H.EmbeddingsEspecializados"
+    participant db as "Supabase"
+
+    User->>main: Executa `python main_ingestao.py <pasta>`
+    activate main
+
+    main->>db: criar_tabela_triplas()
+    main->>db: criar_tabela_metadados()
+    main->>db: criar_tabela_qa_gerado()
+    main->>db: criar_tabela_embeddings()
+
+    main->>A: etapa_ingestao(caminho_pasta)
+    activate A
+    A-->>main: resultados_ingestao
+    deactivate A
+
+    main->>B: etapa_segmentacao(resultados_ingestao)
+    activate B
+    B-->>main: resultados_segmentados
+    deactivate B
+
+    main->>C: etapa_limpeza(resultados_segmentados)
+    activate C
+    C-->>main: resultados_limpos
+    deactivate C
+
+    main->>D: etapa_chunking(resultados_limpos)
+    activate D
+    D-->>main: resultados_chunking
+    deactivate D
+
+    main->>E: etapa_classificacao(resultados_chunking)
+    activate E
+    E-->>main: resultados_classificados
+    deactivate E
+
+    main->>F: etapa_grafo_conhecimento(resultados_classificados)
+    activate F
+    F-->>main: grafo_obj
+    deactivate F
+    loop para cada tripla no grafo
+        main->>db: salvar_no_supabase('triplas_grafo', tripla)
+        activate db
+        db-->>main: response
+        deactivate db
+    end
+
+    main->>G: etapa_geracao_qa(grafo_obj)
+    activate G
+    G-->>main: resultados_qa
+    deactivate G
+    loop para cada par QA
+        main->>db: salvar_no_supabase('qa_gerado', qa_pair)
+        activate db
+        db-->>main: response
+        deactivate db
+    end
+
+    main->>H: etapa_embeddings(resultados_qa)
+    activate H
+    H-->>main: resultados_embeddings
+    deactivate H
+    loop para cada embedding
+        main->>db: salvar_no_supabase('embeddings', embedding)
+        activate db
+        db-->>main: response
+        deactivate db
+    end
+
+    main-->>User: Exibe "Pipeline finalizado com sucesso."
+    deactivate main

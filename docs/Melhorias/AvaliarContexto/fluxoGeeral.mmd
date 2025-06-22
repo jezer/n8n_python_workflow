@@ -1,0 +1,42 @@
+flowchart TD
+  %% Definição de classes de estilo para cores
+  classDef upload fill:#E3F2FD,stroke:#333,stroke-width:1px;
+  classDef normalization fill:#FFF3E0,stroke:#333,stroke-width:1px;
+  classDef storage fill:#E8F5E9,stroke:#333,stroke-width:1px;
+  classDef interface fill:#F3E5F5,stroke:#333,stroke-width:1px;
+
+  %% IA: Iniciar o fluxo de processamento
+  A["Start"]
+
+  A -->|"IA: Identificar fonte e metadados do arquivo"| B["Receber Upload de Arquivos via WhatsApp/GoogleDrive/DataLake"]
+
+
+  %% IA: Criar diagrama detalhado de uso dos arquivos
+  B --> C["Gerar Fluxo Explicativo Mermaid"]
+
+  %% IA: Separar contextos e aplicar regras de CRÍTICAS
+  C --> D["Normalização de Textos em Python"]
+
+  %% IA: Verificar conflitos nas regras de fidelidade e equilíbrio
+  D --> E["Avaliar e Rejeitar Contradições"]
+
+  %% IA: Extrair Ser Humano, Local, CNPJ, País, Endereço
+  D --> F["Quebrar Contextos por Entidade"]
+
+  %% IA: Usar chaves CPF, celular, endereço, quadra e lote
+  F --> G["Armazenar no Banco de Dados vinculado ao indivíduo"]
+
+  %% IA: Disponibilizar APIs para consulta de dados
+  G --> H["Interface de Consumo (WhatsApp/Chat Google)"]
+
+  %% IA: Utilizar contexto armazenado e diagrama do passo 1
+  H --> I["Receber Perguntas e Gerar Respostas"]
+
+  %% IA: Logar inputs e outputs para auditoria
+  I --> J["Capturar e Armazenar Dados de Interação"]
+
+  %% Aplicação de classes para coloração
+  class B,C upload;
+  class D,E,F normalization;
+  class G storage;
+  class H,I,J interface;

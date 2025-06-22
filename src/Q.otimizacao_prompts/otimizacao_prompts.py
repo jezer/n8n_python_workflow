@@ -1,108 +1,121 @@
-from typing import List, Dict, Any, Optional
 import logging
-import random
+from typing import List, Dict, Any, Optional
 
-class OtimizacaoPrompts:
+logger = logging.getLogger(__name__)
+
+class OtimizacaoPromptsMerge:
     """
-    Otimização de prompts via A/B test e técnicas como STaR.
-    Loga todas as variações e impactos.
+    Componente para otimização de prompts que une as melhores práticas de design:
+    - Injeção de dependência para o cliente LLM e o cliente de avaliação.
+    - Lógica de teste A/B que utiliza corretamente o contexto do RAG.
+    - Estrutura extensível para futuros métodos de otimização (ex: STaR).
     """
 
-    def __init__(
-        self,
-        templates: Optional[List[str]] = None,
-        llm_client=None,  # Deve ter método generate(prompt) -> resposta
-        avaliador=None,   # Deve ter método avaliar(resposta) -> score
-        log_level: int = logging.INFO
-    ):
-        self.templates = templates or [
-            "Responda de forma objetiva: {pergunta}",
-            "Explique passo a passo: {pergunta}",
-            "Responda como um especialista: {pergunta}",
-            "Forneça uma resposta detalhada: {pergunta}"
-        ]
-        self.llm_client = llm_client or self._stub_llm
-        self.avaliador = avaliador or self._stub_avaliador
-        logging.basicConfig(level=log_level)
-        self.logger = logging.getLogger("OtimizacaoPrompts")
-
-    def _stub_llm(self, prompt: str) -> str:
-        return "Resposta gerada automaticamente (stub)."
-
-    def _stub_avaliador(self, resposta: str) -> float:
-        return random.uniform(0, 1)
-
-    def ab_test(self, pergunta: str) -> Dict[str, Any]:
+    def __init__(self, llm_client: Any, evaluation_client: Any):
         """
-        Realiza A/B test entre diferentes templates de prompt para uma pergunta.
+        Inicializa o componente de Otimização de Prompts.
+
+        Args:
+            llm_client (Any): Um cliente LLM funcional que possua um método `generate(prompt: str) -> str`.
+            evaluation_client (Any): Um cliente de avaliação que possua um método para avaliar
+                                     respostas (ex: `run(resultados, referencias)`).
         """
-        resultados = []
-        for template in self.templates:
-            prompt = template.format(pergunta=pergunta)
-            resposta = self.llm_client(prompt)
-            score = self.avaliador(resposta)
-            resultados.append({
-                "template": template,
-                "prompt": prompt,
-                "resposta": resposta,
-                "score": score
-            })
-            self.logger.info(f"Template testado: {template} | Score: {score:.3f}")
-        melhor = max(resultados, key=lambda x: x["score"])
+        if not hasattr(llm_client, 'generate') or not callable(llm_client.generate):
+            raise TypeError("O `llm_client` deve ter um método `generate` que seja chamável.")
+        if not hasattr(evaluation_client, 'run') or not callable(evaluation_client.run):
+            raise TypeError("O `evaluation_client` deve ter um método `run` que seja chamável.")
+
+        self.llm_client = llm_client
+        self.evaluation_client = evaluation_client
+        logger.info("OtimizacaoPromptsMerge inicializado.")
+
+    def _construir_prompt(self, template: str, query: str, context: List[str]) -> str:
+        """Constrói um prompt a partir de um template, consulta e contexto."""
+        context_str = "\n".join([f"Documento {i+1}: {doc}" for i, doc in enumerate(context)])
+        return template.format(context=context_str, query=query)
+
+    def _run_ab_test(self, evaluation_dataset: List[Dict[str, Any]], prompt_a: str, prompt_b: str, referencias: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """
+        Executa um teste A/B entre dois templates de prompt, utilizando um cliente de avaliação real.
+        """
+        logger.info("Iniciando teste A/B para os prompts.")
+        
+        # Gerar respostas para o Prompt A
+        respostas_a = []
+        for item in evaluation_dataset:
+            query = item.get("query")
+            context = item.get("context_documents", [])
+            prompt_completo_a = self._construir_prompt(prompt_a, query, context)
+            resposta_a = self.llm_client.generate(prompt_completo_a)
+            respostas_a.append({"query": query, "answer": resposta_a, "context_documents": context})
+
+        # Gerar respostas para o Prompt B
+        respostas_b = []
+        for item in evaluation_dataset:
+            query = item.get("query")
+            context = item.get("context_documents", [])
+            prompt_completo_b = self._construir_prompt(prompt_b, query, context)
+            resposta_b = self.llm_client.generate(prompt_completo_b)
+            respostas_b.append({"query": query, "answer": resposta_b, "context_documents": context})
+
+        # Avaliar os dois conjuntos de respostas
+        avaliacoes_a = self.evaluation_client.run(respostas_a, referencias)
+        avaliacoes_b = self.evaluation_client.run(respostas_b, referencias)
+
+        # Calcular scores médios (exemplo usando ROUGE-L)
+        score_medio_a = sum(
+            res.get("avaliacao_automatica", {}).get("rouge", {}).get("rougeL", 0.0)
+            for res in avaliacoes_a
+        ) / len(avaliacoes_a) if avaliacoes_a else 0
+
+        score_medio_b = sum(
+            res.get("avaliacao_automatica", {}).get("rouge", {}).get("rougeL", 0.0)
+            for res in avaliacoes_b
+        ) / len(avaliacoes_b) if avaliacoes_b else 0
+
+        vencedor = "Prompt A" if score_medio_a >= score_medio_b else "Prompt B"
+        logger.info(f"Resultado do teste A/B: Vencedor = {vencedor} (A: {score_medio_a:.4f}, B: {score_medio_b:.4f})")
+
         return {
-            "pergunta": pergunta,
-            "resultados": resultados,
-            "melhor_template": melhor["template"],
-            "melhor_score": melhor["score"]
+            "method": "a/b_test",
+            "prompt_a_avg_score": score_medio_a,
+            "prompt_b_avg_score": score_medio_b,
+            "winner": vencedor,
+            "num_samples_tested": len(evaluation_dataset)
         }
 
-    def star_optimization(self, pergunta: str, n_iter: int = 3) -> Dict[str, Any]:
+    def _run_star(self, evaluation_dataset: List[Dict[str, Any]], **kwargs) -> Dict[str, Any]:
+        """(Placeholder) Implementação futura da otimização STaR."""
+        logger.warning("O método de otimização 'star' ainda não foi implementado.")
+        return {"status": "unimplemented_method", "method": "star"}
+
+    def run(self, evaluation_dataset: List[Dict[str, Any]], metodo: str = "ab_test", **kwargs) -> Dict[str, Any]:
         """
-        Técnica STaR: gera raciocínio intermediário, ajusta prompt e avalia impacto.
+        Executa o processo de otimização de prompts.
+
+        Args:
+            evaluation_dataset: Um conjunto de dados de avaliação, contendo 'query' e 'context_documents'.
+            metodo (str): O método de otimização a ser usado ('ab_test', 'star').
+            **kwargs: Argumentos adicionais para o método específico.
+                      Para 'ab_test', espera-se 'prompt_a', 'prompt_b', e 'referencias'.
+
+        Returns:
+            Um dicionário com o relatório da otimização.
         """
-        historico = []
-        melhor_score = -1
-        melhor_prompt = ""
-        for i in range(n_iter):
-            raciocinio = f"Raciocine sobre: {pergunta} (iteração {i+1})"
-            prompt = f"{raciocinio}\n{random.choice(self.templates).format(pergunta=pergunta)}"
-            resposta = self.llm_client(prompt)
-            score = self.avaliador(resposta)
-            historico.append({
-                "prompt": prompt,
-                "resposta": resposta,
-                "score": score
-            })
-            self.logger.info(f"STaR iteração {i+1}: Score {score:.3f}")
-            if score > melhor_score:
-                melhor_score = score
-                melhor_prompt = prompt
-        return {
-            "pergunta": pergunta,
-            "historico": historico,
-            "melhor_prompt": melhor_prompt,
-            "melhor_score": melhor_score
-        }
+        if metodo == "ab_test":
+            prompt_a = kwargs.get("prompt_a", "Contexto:\n{context}\n\nPergunta: {query}\nResposta concisa:")
+            prompt_b = kwargs.get("prompt_b", "Com base no contexto fornecido:\n{context}\n\nResponda à seguinte pergunta:\n{query}\nResposta detalhada:")
+            referencias = kwargs.get("referencias")
+            
+            if not referencias:
+                logger.error("Referências (ground truth) são necessárias para o teste A/B.")
+                return {"status": "error", "message": "Referências não fornecidas."}
+
+            return self._run_ab_test(evaluation_dataset, prompt_a, prompt_b, referencias)
         
-    def run(self, resultados_avaliacao: List[Dict[str, Any]], metodo: str = "ab_test") -> List[Dict[str, Any]]:
-        """
-        Recebe lista de avaliações, executa otimização de prompts para cada pergunta.
-        """
-        otimizacoes = []
-        for item in resultados_avaliacao:
-            pergunta = item.get("query", "")
-            if not pergunta:
-                self.logger.warning("Item sem 'query': %s", item)
-                continue
-            try:
-                if metodo == "ab_test":
-                    resultado = self.ab_test(pergunta)
-                elif metodo == "star":
-                    resultado = self.star_optimization(pergunta)
-                else:
-                    raise ValueError("Método de otimização não suportado.")
-                otimizacoes.append(resultado)
-            except Exception as e:
-                self.logger.error(f"Erro ao otimizar prompt para '{pergunta}': {e}")
-        return otimizacoes
-        
+        elif metodo == "star":
+            return self._run_star(evaluation_dataset, **kwargs)
+            
+        else:
+            logger.error(f"Método de otimização '{metodo}' não suportado.")
+            return {"status": "unsupported_method", "method": metodo}

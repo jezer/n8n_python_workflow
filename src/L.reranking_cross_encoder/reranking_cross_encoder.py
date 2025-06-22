@@ -1,80 +1,91 @@
-from typing import List, Dict, Any, Optional
-import numpy as np
 import logging
+from typing import List, Dict, Any
+from sentence_transformers import CrossEncoder
 
-class RerankingCrossEncoder:
+logger = logging.getLogger(__name__)
+
+class RerankerCombinado:
     """
-    Reranking com Cross-Encoder, combinando dense/sparse com pesos dinâmicos.
-    Permite calibrar pesos via grid search.
+    Reranking com Cross-Encoder que combina o score inicial do retriever com o score
+    do cross-encoder através de uma ponderação configurável, unindo as melhores
+    práticas de robustez e lógica de combinação.
     """
 
-    def __init__(
-        self,
-        cross_encoder_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
-        dense_weight: float = 0.6,
-        sparse_weight: float = 0.4,
-        grid_search: bool = False,
-        log_level: int = logging.INFO
-    ):
-        from sentence_transformers import CrossEncoder
-        self.cross_encoder = CrossEncoder(cross_encoder_model)
-        self.dense_weight = dense_weight
-        self.sparse_weight = sparse_weight
-        self.grid_search = grid_search
-        logging.basicConfig(level=log_level)
-        self.logger = logging.getLogger("RerankingCrossEncoder")
+    def __init__(self, 
+                 model_name: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
+                 cross_encoder_weight: float = 0.5):
+        """
+        Inicializa o Reranker.
 
-    def calibrar_pesos(self, resultados: List[Dict[str, Any]], y_true: List[int], grid: Optional[List[float]] = None):
+        Args:
+            model_name (str): O nome do modelo CrossEncoder a ser carregado.
+            cross_encoder_weight (float): O peso a ser dado ao score do cross-encoder (entre 0 e 1).
+                                          O score do retriever inicial terá o peso (1 - cross_encoder_weight).
         """
-        Calibra pesos dense/sparse via grid search para maximizar métrica (ex: MAP).
-        """
-        if not grid:
-            grid = np.arange(0.0, 1.05, 0.05)
-        melhor_score = -np.inf
-        melhor_pesos = (self.dense_weight, self.sparse_weight)
-        for dw in grid:
-            sw = 1.0 - dw
-            score = self._avaliar_pesos(resultados, y_true, dw, sw)
-            if score > melhor_score:
-                melhor_score = score
-                melhor_pesos = (dw, sw)
-        self.dense_weight, self.sparse_weight = melhor_pesos
-        self.logger.info(f"Pesos calibrados: dense={self.dense_weight:.2f}, sparse={self.sparse_weight:.2f}")
+        if not 0.0 <= cross_encoder_weight <= 1.0:
+            raise ValueError("cross_encoder_weight deve estar entre 0.0 e 1.0")
 
-    def _avaliar_pesos(self, resultados, y_true, dw, sw):
-        # Stub: retorna score aleatório (implemente MAP real conforme necessidade)
-        import random
-        return random.uniform(0, 1)
+        self.model_name = model_name
+        self.cross_encoder_weight = cross_encoder_weight
+        self.retriever_weight = 1.0 - cross_encoder_weight
+        self.reranker = None
 
-    def combinar_scores(self, dense_score, sparse_score):
-        return self.dense_weight * dense_score + self.sparse_weight * sparse_score
-    
-    def rerank(self, query: str, docs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        try:
+            self.reranker = CrossEncoder(model_name)
+            logger.info(f"Cross-encoder model '{model_name}' loaded successfully.")
+        except Exception as e:
+            logger.error(f"Failed to load cross-encoder model '{model_name}': {e}")
+            # self.reranker permanece None, o que será tratado no método run.
+
+    def run(self, retrieval_results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
-        Recebe query e lista de docs (cada doc com 'dense_score', 'sparse_score', 'texto').
-        Retorna docs reranqueados pelo Cross-Encoder e score combinado.
+        Reranqueia documentos combinando o score do retriever com o do cross-encoder.
+
+        Args:
+            retrieval_results: Uma lista de dicionários, onde cada um contém "query" e "resultados".
+                               Cada item em "resultados" deve ter "document" (str) e "score" (float).
+
+        Returns:
+            A lista de resultados com os documentos reranqueados e um "final_score" combinado.
         """
-        if not isinstance(query, str) or not isinstance(docs, list):
-            self.logger.error("Query deve ser string e docs deve ser lista de dicts.")
-            raise ValueError("Entradas inválidas.")
-        pares = [[query, doc.get("texto", "")] for doc in docs]
-        ce_scores = self.cross_encoder.predict(pares)
-        for i, doc in enumerate(docs):
-            doc["cross_score"] = float(ce_scores[i])
-            doc["score_final"] = self.combinar_scores(
-                doc.get("dense_score", 0), doc.get("sparse_score", 0)
-            ) * 0.7 + doc["cross_score"] * 0.3
-        docs_ordenados = sorted(docs, key=lambda d: d["score_final"], reverse=True)
-        return docs_ordenados
-    def run(self, resultados_retriever: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """
-        Recebe lista de dicts com 'query' e 'resultados' (docs), retorna lista reranqueada.
-        """
-        reranked = []
-        for item in resultados_retriever:
-            query = item.get("query", "")
-            docs = item.get("resultados", [])
-            # Espera-se que cada doc tenha 'dense_score', 'sparse_score', 'texto'
-            reranked_docs = self.rerank(query, docs)
-            reranked.append({"query": query, "resultados": reranked_docs})
-        return reranked
+        if not self.reranker:
+            logger.warning("Reranker model not loaded. Skipping reranking step and returning original results.")
+            return retrieval_results
+
+        reranked_output = []
+        for item in retrieval_results:
+            query = item.get("query")
+            retrieved_docs = item.get("resultados", [])
+
+            if not query or not retrieved_docs:
+                reranked_output.append(item)
+                continue
+
+            pairs = [[query, doc["document"]] for doc in retrieved_docs]
+
+            try:
+                cross_encoder_scores = self.reranker.predict(pairs)
+
+                reranked_docs = []
+                for i, doc in enumerate(retrieved_docs):
+                    initial_score = doc.get("score", 0.0)
+                    cross_score = float(cross_encoder_scores[i])
+
+                    # Combinação ponderada dos scores
+                    final_score = (initial_score * self.retriever_weight) + (cross_score * self.cross_encoder_weight)
+
+                    doc_result = doc.copy() # Evita modificar o dicionário original
+                    doc_result["score"] = final_score # Atualiza o score principal
+                    doc_result["original_retriever_score"] = initial_score
+                    doc_result["cross_encoder_score"] = cross_score
+                    reranked_docs.append(doc_result)
+                
+                reranked_docs.sort(key=lambda x: x["score"], reverse=True)
+                reranked_output.append({"query": query, "resultados": reranked_docs})
+
+            except Exception as e:
+                logger.error(f"Error during reranking for query '{query}': {e}. Returning original results for this query.")
+                reranked_output.append(item)
+
+        return reranked_output
+
