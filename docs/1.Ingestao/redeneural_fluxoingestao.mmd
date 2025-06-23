@@ -1,0 +1,129 @@
+sequenceDiagram
+    %% Diagrama de Sequência para o Pipeline de Ingestão de Dados com Sugestões de Redes Neurais
+    %% Gerado a partir da análise de /src/1.ingestao/main_ingestao.py e fluxo.mmd
+    %% IA: Este diagrama descreve o fluxo de orquestração principal e aponta oportunidades para Redes Neurais.
+
+    participant User
+    participant main as "main_ingestao.py"
+    participant A as "A.IngestaoDeArquivos"
+    participant B as "B.SegmentadorUnificado"
+    participant C as "C.LimpezaNormalizacao"
+    participant D as "D.ChunkingInteligente"
+    participant E as "E.ClassificacaoTagging"
+    participant F as "F.GrafoConhecimento"
+    participant G as "G.GeracaoQA"
+    participant H as "H.EmbeddingsEspecializados"
+    participant NN as "Componente de Rede Neural"
+    participant db as "Supabase"
+
+    User->>main: Executa `python main_ingestao.py <pasta>`
+    activate main
+
+    main->>db: criar_tabela_triplas()
+    main->>db: criar_tabela_metadados()
+    main->>db: criar_tabela_qa_gerado()
+    main->>db: criar_tabela_embeddings()
+
+    main->>A: etapa_ingestao(caminho_pasta)
+    activate A
+    %% Sugestão NN: OCR avançado para PDFs/Imagens (se não for já parte do Tesseract/outra lib)
+    A-->>main: resultados_ingestao
+    deactivate A
+
+    main->>B: etapa_segmentacao(resultados_ingestao)
+    activate B
+    B->>NN: Segmentação Semântica (e.g., modelo Transformer)
+    activate NN
+    NN-->>B: segmentos_semanticos
+    deactivate NN
+    %% Sugestão NN: Usar modelos de sequência (e.g., Transformers) para identificar limites de segmentos mais coerentes semanticamente.
+    B-->>main: resultados_segmentados
+    deactivate B
+
+    main->>C: etapa_limpeza(resultados_segmentados)
+    activate C
+    C->>NN: Normalização Inteligente (e.g., correção de erros, coreferência)
+    activate NN
+    NN-->>C: texto_normalizado
+    deactivate NN
+    %% Sugestão NN: Aplicar NNs para correção de erros contextuais, resolução de coreferência e padronização de terminologia.
+    C-->>main: resultados_limpos
+    deactivate C
+
+    main->>D: etapa_chunking(resultados_limpos)
+    activate D
+    D->>NN: Chunking Semântico (e.g., modelo de sumarização/coerência)
+    activate NN
+    NN-->>D: chunks_coerentes
+    deactivate NN
+    %% Sugestão NN: Utilizar NNs para criar chunks que representem unidades de informação completas e semanticamente coesas.
+    D-->>main: resultados_chunking
+    deactivate D
+
+    main->>E: etapa_classificacao(resultados_chunking)
+    activate E
+    E->>NN: Classificação/NER Avançada (e.g., BERT, RoBERTa)
+    activate NN
+    NN-->>E: classificacoes_tags_entidades
+    deactivate NN
+    %% Sugestão NN: Empregar modelos de linguagem pré-treinados para classificação de texto, reconhecimento de entidades nomeadas (NER) e extração de atributos.
+    E-->>main: resultados_classificados
+    deactivate E
+
+    main->>F: etapa_grafo_conhecimento(resultados_classificados)
+    activate F
+    F->>NN: Extração de Relações (e.g., OpenIE, modelos de extração de triplas)
+    activate NN
+    NN-->>F: triplas_extraidas
+    deactivate NN
+    %% Sugestão NN: Usar NNs para identificar e extrair automaticamente relações entre entidades, formando triplas (sujeito, predicado, objeto) para o grafo.
+    F-->>main: grafo_obj
+    deactivate F
+    loop para cada tripla no grafo
+        main->>db: salvar_no_supabase('triplas_grafo', tripla)
+        activate db
+        db-->>main: response
+        deactivate db
+    end
+
+    main->>G: etapa_geracao_qa(grafo_obj)
+    activate G
+    G->>NN: Geração de QA Contextual (e.g., LLM fine-tuned)
+    activate NN
+    NN-->>G: pares_qa_gerados
+    deactivate NN
+    %% Sugestão NN: Utilizar LLMs (Large Language Models) para gerar perguntas e respostas mais complexas e contextualmente ricas a partir do grafo de conhecimento ou chunks.
+    G-->>main: resultados_qa
+    deactivate G
+    loop para cada par QA
+        main->>db: salvar_no_supabase('qa_gerado', qa_pair)
+        activate db
+        db-->>main: response
+        deactivate db
+    end
+
+    main->>H: etapa_embeddings(resultados_qa)
+    activate H
+    H->>NN: Geração de Embeddings Especializados (e.g., Sentence Transformers fine-tuned)
+    activate NN
+    NN-->>H: vetores_semanticos
+    deactivate NN
+    %% Aplicação NN Existente: Geração de embeddings vetoriais para representação semântica do texto. Pode ser aprimorado com fine-tuning em dados específicos do domínio.
+    H-->>main: resultados_embeddings
+    deactivate H
+    loop para cada embedding
+        main->>db: salvar_no_supabase('embeddings', embedding)
+        activate db
+        db-->>main: response
+        deactivate db
+    end
+
+    %% Sugestão NN (Nova Etapa): Validação e Qualidade de Dados
+    main->>NN: Detecção de Anomalias/Qualidade (e.g., modelos de classificação de qualidade)
+    activate NN
+    NN-->>main: relatorio_qualidade
+    deactivate NN
+    %% Sugestão NN: Adicionar uma etapa para usar NNs para verificar a qualidade dos dados gerados (chunks, QAs, triplas) e detectar anomalias ou inconsistências.
+
+    main-->>User: Exibe "Pipeline finalizado com sucesso."
+    deactivate main
