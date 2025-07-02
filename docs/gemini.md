@@ -24,11 +24,8 @@ Para detalhes sobre as convenções e regras do projeto, consulte os arquivos na
 - [Convenções de Documentação](rules/documentation_conventions.md)
 - [Exceções de Pastas](rules/folder_exceptions.md)
 
-## 4. Instruções para IAs
 
-Note que existem arquivos específicos para diferentes modelos (`gemini_...`, `dpseek_...`, `gpt_...`). Ao gerar novas instruções, siga este padrão.
-
-## 5. Instruções Específicas para o Gemini
+## 4. Instruções Específicas para o Gemini
 
 - Ao gerar código Python, siga as convenções encontradas nos arquivos da pasta `help/`.
 - Ao gerar documentação, siga o estilo dos arquivos `.md` existentes.

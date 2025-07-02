@@ -13,7 +13,7 @@
     *   Para arquivos de documentação **suplementares** dentro de uma pasta de documentação (ex: `docs/src/meu_modulo/`), use nomes descritivos, em minúsculas e separados por hífens (ex: `visao_geral.md`, `uso.md`, `referencia_api.md`, `fluxo_dados.mmd`).
 *   **Formato:**
     *   **Texto:** Markdown (`.md`).
-    *   **Diagramas:** Mermaid (`.mmd`).
+    *   **Diagramas:** Mermaid (`.mmd`). Para diagramas de classe, siga a sintaxe oficial em [Mermaid Class Diagram](https://mermaid.js.org/syntax/classDiagram.html). Um exemplo básico pode ser encontrado em [mermaid_class_diagram_example.md](mermaid_class_diagram_example.md).
 *   **Idioma:** Português do Brasil (pt-BR), conforme já estabelecido.
 *   **Conteúdo Mínimo por Módulo/Arquivo de Código:**
     *   `visao_geral.md`: Uma descrição de alto nível do propósito do módulo/arquivo.
