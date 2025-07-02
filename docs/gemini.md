@@ -1,4 +1,3 @@
-
 # Contexto do Projeto: IATextHelp/n8n_python_workflow
 
 ## 1. Sobre o Projeto
@@ -30,6 +29,7 @@ O projeto está organizado em torno de "instruções" para diferentes modelos de
 
 ## 4. Instruções para o Gemini
 
+- **Idioma de Resposta:** Sempre responda em português do Brasil.
 - Ao gerar código Python, siga as convenções encontradas nos arquivos da pasta `help/`.
 - Ao gerar documentação, siga o estilo dos arquivos `.md` existentes.
 - Ao ser solicitado para criar um fluxo ou diagrama, gere o código em formato Mermaid (`.mmd`).
