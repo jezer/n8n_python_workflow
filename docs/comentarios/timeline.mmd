@@ -1,0 +1,28 @@
+---
+config:
+  logLevel: 'debug'
+  theme: 'forest'
+---
+gantt
+    title Cronograma de Comentários e Alterações
+    dateFormat  YYYY-MM
+
+    %% Instrução para IA: nesta fase, vamos coletar todos os comentários recebidos
+    section Comentários 🟢
+        Receber comentários       :a1, 2025-06, 3M
+        Controlar alterações      :a2, after a1, 2M
+        Estabelecer procedimentos :a3, after a2, 2M
+
+    %% Instrução para IA: nesta fase, vamos analisar e identificar alterações
+    section Análises 🔵
+        Identificar alterações    :b1, 2025-07, 2M
+        Testes de aviso           :b2, after b1, 2M
+        Ensaios de análises       :b3, after b2, 2M
+        Oficializar monitoramento :b4, after b3, 2M
+
+    %% Instrução para IA: nesta fase, vamos monitorar alterações
+    section Monitorar 🔴
+        Enviar relatorio semanal  :c1, 2025-08, 2M
+        Confirmar recebimento     :c2, after c1, 2M
+        Containers impactados     :c3, after c2, 2M
+        Áreas impactadas          :c4, after c3, 2M

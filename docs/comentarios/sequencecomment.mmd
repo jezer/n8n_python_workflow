@@ -1,0 +1,16 @@
+sequenceDiagram
+    %% context:INICIO; prompt:"Receber arquivo de comentários em formato XLS do setor de Governança"
+    participant Governanca as "📂 Governança"
+    %% context:ORGANIZAR; prompt:"Organizar os comentários recebidos no Container 110"
+    participant Container110 as "📑 Container 110"
+    %% context:ATUALIZAR; prompt:"Cada container deve atualizar seus próprios comentários no sistema"
+    participant Aprovador as "📄 Aprovador"
+    participant Container as "🧹 Cada Container"
+    
+    
+    Governanca->>Container110: "Enviar comentários (xls)"
+    Container110 ->> Aprovador: "Enviar Aprovação"
+    Aprovador ->> Container: "Aprovado"
+    Aprovador ->> Container110: "Reprovado"
+    Container110->>Container: "Organizar comentários"
+    Container->>Container: "Atualizar próprios comentários"

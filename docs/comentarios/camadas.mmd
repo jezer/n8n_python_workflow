@@ -1,0 +1,44 @@
+flowchart LR
+    %% Instrução para IA: definir bloco Raw com cor azul para o contexto de dados brutos
+    subgraph "Raw"
+        direction TB
+        A["\"Dados Raw\""]
+    end
+
+    %% Instrução para IA: representar o passo de transformação como um losango decisório
+    T{"\"Transformação\""}
+
+    %% Instrução para IA: definir bloco Trusted com cor verde para o contexto de dados validados
+    subgraph "Trusted"
+        direction TB
+        B["\"Dados Trusted\""]
+    end
+
+    %% Instrução para IA: definir bloco Delivery com cor amarelo para o contexto de dados consumíveis
+    subgraph "Delivery"
+        direction TB
+        D["\"Dados Delivery\""]
+    end
+
+    %% Fluxo principal de ingestão e processamento
+    A --> T
+    T --> B
+    B --> D
+
+    %% Instrução para IA: desenhar setas para usos finais dos dados Delivery
+    D --> E["\"Relatórios\""]
+    D --> F["\"APIs\""]
+    D --> G["\"Visualizações\""]
+
+    %% Instrução para IA: adicionar loops de feedback de uso para transformação contínua
+    E -.-> T
+    F -.-> T
+
+    %% Estilos de cor para cada contexto
+    style A fill:#3498db,stroke:#333,stroke-width:2px
+    style T fill:#d0e6f5,stroke:#333,stroke-width:2px
+    style B fill:#2ecc71,stroke:#333,stroke-width:2px
+    style D fill:#f1c40f,stroke:#333,stroke-width:2px
+    style E fill:#f9e79f,stroke:#333,stroke-width:1px
+    style F fill:#f9e79f,stroke:#333,stroke-width:1px
+    style G fill:#f9e79f,stroke:#333,stroke-width:1px

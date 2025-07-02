@@ -1,5 +1,19 @@
+---
+title: When Use DB
+config:
+  layout: dagre
+  dagre:
+    mergeEdges: true
+    nodePlacementStrategy: BRANDES_KOEPF
+  look: handDrawn
+  theme: forest
+---
+%%  nodePlacementStrategy:  SIMPLE, NETWORK_SIMPLEX, LINEAR_SEGMENTS, BRANDES_KOEPF
+
+
+
 graph TD
-    subgraph "📁 Pipeline de Pré-processamento"
+    subgraph preprocess["📁 Pipeline de Pré-processamento"]
         A["📂 Ingestão de Arquivos"] -->|"IA: Usar OCR (Tesseract+LayoutLM) com pós-processamento por LLM para correção (ex: GPT-4 para validação contextual)"| B["📑 Segmentação de Texto"]
         
         B -->|"IA: Classificador binário (BERTimbau) + fallback para regras heurísticas (ex: padrões de rodapé). Logar decisões para auditoria."| C["🧹 Limpeza e Normalização"]
@@ -9,7 +23,7 @@ graph TD
         D -->|"IA: DeBERTa-v3 fine-tuned com threshold de confiança (0.7). Chunks abaixo do threshold receber tag 'REVISAR'"| E["🏷️ Classificação e Tagging"]
     end
 
-    subgraph "🗄️ Construção do Conhecimento"
+    subgraph knowledge["🗄️ Construção do Conhecimento"]
         E -->|"IA: Extrair triplas (sujeito-predicado-objeto) com REBEL, normalizar entidades (ex: Python3→Python 3). Validar com validação cruzada."| F["📊 Grafo de Conhecimento"]
         
         F -->|"IA: Few-shot prompting com exemplos validados por especialista. Incluir chain-of-thought e verificações de factualidade."| G["❓ Geração de QA (Few-shot)"]
@@ -21,13 +35,13 @@ graph TD
         I -->|"IA: NER customizado (spaCy + transformer) + linking para entidades do grafo. Logar metadados gerados."| J["🏷️ Metadados Enriquecidos"]
     end
 
-    subgraph "🛠️ Sistema RAG"
+    subgraph rag["🛠️ Sistema RAG"]
         K["🔍 Hybrid Retriever"] -->|"IA: Weighted score (0.6 dense + 0.4 sparse). Cache de embeddings (TTL=24h). Fallback para BM25 se erro."| L["⚖️ Reranking (Cross-Encoder)"]
         
         L -->|"IA: Dynamic few-shot selection (top-3 exemplos similares por embedding). Fallback para exemplos genéricos se similaridade <0.65."| M["🧠 LLM com RAG"]
     end
 
-    subgraph "📈 Ciclo de Melhoria"
+    subgraph eval["📈 Ciclo de Melhoria"]
         M -->|"IA: Avaliação automática (ROUGE, BERTScore, precisão de citações) + LLM-as-a-judge (GPT-4 com critérios explícitos)."| N["📝 Avaliação Contínua"]
         
         N -->|"IA: Hard negative mining baseado em erros. Fine-tuning progressivo com early stopping."| O["🔧 Retriever Adaptativo"]
@@ -38,24 +52,24 @@ graph TD
     end
 
     %% Novos Módulos Adicionados
-    subgraph "🔎 Monitoramento"
+    subgraph monit["🔎 Monitoramento"]
         R["📊 Dashboard"] -->|"IA: Detecção de anomalias (ex: queda repentina no recall). Alertas automáticos."| S["🚨 Sistema de Alertas"]
     end
 
     %% Conexões Adicionais
     E -->|Backup| R
     I -->|Monitoramento| R
-    M -->|Logs| R
-
+    M -->|Logs| R 
+    
     %% Estilização
-    classDef preprocess fill:#f0f9ff,stroke:#1e40af,stroke-width:2px;
-    classDef knowledge fill:#e0f2fe,stroke:#1e40af,stroke-width:2px;
-    classDef rag fill:#dbeafe,stroke:#1e3a8a,stroke-width:2px;
+    classDef preprocess fill:#f0f9ff,stroke:#fff,stroke-width:3px;
+    classDef knowledge fill:#e0,stroke:#1e40af,stroke-width:2px,color:#fff;
+    classDef rag fill:#dbeafe,stroke:#ca8a04,stroke-width:2px;
     classDef eval fill:#fef9c3,stroke:#ca8a04,stroke-width:2px;
-    classDef monitor fill:#ffedd5,stroke:#ea580c,stroke-width:2px;
+    classDef monit fill:#ffedd5,stroke:#ea580c,stroke-width:2px;
 
     class A,B,C,D,E preprocess;
     class F,G,H,I,J knowledge;
     class K,L,M rag;
     class N,O,P,Q eval;
-    class R,S monitor;
+    class R,S monit;

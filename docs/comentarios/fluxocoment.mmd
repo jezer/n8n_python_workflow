@@ -1,0 +1,18 @@
+graph LR
+    subgraph "📋 Alterar comentários de colunas de tabelas"
+
+        %% Opção 1 à esquerda
+        subgraph "🟢 Opção 1: Comentário por container"
+        direction TB
+            A["📂 Governança envia comentário (xls)"] --> B["📑 Container 110 organiza comentários"]
+            B --> C["🧹 Cada container atualiza seus próprios comentários"]
+        end
+
+        %% Opção 2 à direita
+        subgraph "🔵 Opção 2: Comentário centralizado"
+        direction TB
+            D["📂 Governança envia comentário (xls)"] --> E["📑 Container 110 organiza comentários"]
+            E --> F["🧹 110 aplica comentários semanalmente"]
+        end
+
+    end
