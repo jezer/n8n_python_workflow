@@ -47,8 +47,7 @@ O arquivo `lastGitCommand.md` controla quando o script pode ser executado.
 ## 5. Melhorias Futuras e Considerações
 
 *   **Configuração de Intervalo**: Atualmente, o intervalo de atualização da data limite é fixo em 2 horas. Uma melhoria seria permitir que este intervalo fosse configurável (ex: via um parâmetro no script ou um arquivo de configuração).
-*   **Tratamento de Erros**: Adicionar tratamento de erros mais robusto para as operações Git (ex: falha no pull/push devido a conflitos ou problemas de rede) e para a leitura/escrita do arquivo `lastGitCommand.md`.
-*   **Log Detalhado**: Implementar um sistema de log mais detalhado para registrar cada execução, sucesso/falha e as datas envolvidas.
+*   **Tratamento de Erros**: Adicionar tratamento de erros mais robusto para as operações Git (ex: falha no pull/push devido a conflitos ou problemas de rede) e para a leitura/escrita do arquivo `lastGitCommand.md`.n*   **Log Detalhado**: Implementar um sistema de log mais detalhado para registrar cada execução, sucesso/falha e as datas envolvidas.
 *   **Agendamento**: Para uma automação contínua, o script pode ser agendado para rodar periodicamente usando o Agendador de Tarefas do Windows, em vez de ser executado manualmente.
 
 ```

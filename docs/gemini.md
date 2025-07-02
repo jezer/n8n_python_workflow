@@ -16,6 +16,7 @@ O projeto está organizado em torno de "instruções" para diferentes modelos de
 
 ## 3. Convenções do Projeto
 
+- **Convenções de Código e Documentação:** Consulte o arquivo `convencoes.md` para diretrizes detalhadas sobre estilo de código, nomenclatura e estrutura da documentação.
 - **Idioma:** Sempre que criar ou modificar arquivos, utilize **português do Brasil**, a menos que seja instruído do contrário. Isso se aplica a comentários no código, documentação e mensagens de commit.
 - **Diagramas:** Ao criar ou editar diagramas, utilize la sintaxe **Mermaid**. Salve novos diagramas com a extensão `.mmd`.
 - **Estrutura de Pastas:**
@@ -30,6 +31,8 @@ O projeto está organizado em torno de "instruções" para diferentes modelos de
 ## 4. Instruções para o Gemini
 
 - **Idioma de Resposta:** Sempre responda em português do Brasil.
+- **Operações Git:** Sempre que for solicitado a realizar operações Git (como commit, pull, push, etc.), execute o script `powershell.exe -ExecutionPolicy Bypass -File .\commands\git_auto_commit.ps1` em vez de comandos Git individuais.
+- **Pasta 'temp':** A pasta `temp` nunca deve ser considerada para absolutamente NADA (leitura, escrita, inclusão em operações Git, etc.).
 - Ao gerar código Python, siga as convenções encontradas nos arquivos da pasta `help/`.
 - Ao gerar documentação, siga o estilo dos arquivos `.md` existentes.
 - Ao ser solicitado para criar um fluxo ou diagrama, gere o código em formato Mermaid (`.mmd`).
