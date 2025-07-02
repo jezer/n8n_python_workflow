@@ -1,3 +1,4 @@
+
 # Contexto do Projeto: IATextHelp/n8n_python_workflow
 
 ## 1. Sobre o Projeto
@@ -33,3 +34,4 @@ O projeto está organizado em torno de "instruções" para diferentes modelos de
 - Ao gerar documentação, siga o estilo dos arquivos `.md` existentes.
 - Ao ser solicitado para criar um fluxo ou diagrama, gere o código em formato Mermaid (`.mmd`).
 - Após cada alteração bem-sucedida (criação, modificação ou exclusão de arquivos), adicione os arquivos ao stage do Git, crie um commit com uma mensagem descritiva e execute o push para o repositório remoto.
+- Sempre guarde todas as execuções no arquivo de log_yyyy_mm_dd_hh_MM_ss.txt
