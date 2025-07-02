@@ -17,8 +17,8 @@ O script `git_auto_commit.ps1` segue a seguinte lógica:
 
 1.  **Leitura da Data Limite**: O script lê a data e hora contidas no arquivo `lastGitCommand.md`. Esta data representa o limite até o qual o script pode ser executado.
 2.  **Verificação Condicional**: Compara a data e hora atual do sistema com a data limite lida do `lastGitCommand.md`.
-    *   **Se a data atual for ANTES da data limite**: O script prossegue com as operações Git.
-    *   **Se a data atual for DEPOIS ou IGUAL à data limite**: O script não executa as operações Git e exibe uma mensagem informando que a data de execução expirou.
+    *   **Se a data atual for MAIOR OU IGUAL à data limite**: O script prossegue com as operações Git.
+    *   **Se a data atual for MENOR QUE a data limite**: O script não executa as operações Git e exibe uma mensagem informando que a data de execução ainda não foi atingida.
 3.  **Operações Git (se a condição for atendida)**:
     *   `git pull`: Sincroniza o repositório local com as últimas alterações do repositório remoto. Isso evita conflitos e garante que o commit seja feito sobre a versão mais recente.
     *   `git add .`: Adiciona todas as alterações (novos arquivos, modificações, exclusões) na área de staging do Git.
