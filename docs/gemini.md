@@ -14,25 +14,22 @@ O projeto está organizado em torno de "instruções" para diferentes modelos de
 - **Diagramas:** Mermaid (`.mmd`) para fluxogramas, diagramas de sequência, mind maps, etc.
 - **Idioma:** A grande maioria dos documentos e nomes de arquivos está em português do Brasil (pt-BR).
 
-## 3. Convenções do Projeto
+## 3. Convenções e Regras do Projeto
 
-- **Convenções de Código e Documentação:** Consulte o arquivo `convencoes.md` para diretrizes detalhadas sobre estilo de código, nomenclatura e estrutura da documentação.
-- **Idioma:** Sempre que criar ou modificar arquivos, utilize **português do Brasil**, a menos que seja instruído do contrário. Isso se aplica a comentários no código, documentação e mensagens de commit.
-- **Diagramas:** Ao criar ou editar diagramas, utilize la sintaxe **Mermaid**. Salve novos diagramas com a extensão `.mmd`.
-- **Estrutura de Pastas:**
-    - `0.0.BuildInstrucao`: Contém os critérios e exemplos para construir instruções para as IAs.
-    - `1.Ingestao`, `1.1classificao`: Etapas do fluxo principal de processamento de dados.
-    - `comentarios`: Armazena diversos tipos de diagramas que documentam o sistema.
-    - `help`: Documentação de módulos Python específicos como `Orquestrador` e `PersistenciaSupabase`.
-    - `instruirteste`: Instruções para a criação de testes.
-    - `n8n_postgree`: Detalhes da integração entre n8n e o banco de dados.
-- **Instruções para IAs:** Note que existem arquivos específicos para diferentes modelos (`gemini_...`, `dpseek_...`, `gpt_...`). Ao gerar novas instruções, siga este padrão.
+Para detalhes sobre as convenções e regras do projeto, consulte os arquivos na pasta `docs/rules/`:
 
-## 4. Instruções para o Gemini
+- [Regras de Operações Git](rules/git_operations.md)
+- [Regras de Idioma e Estilo Geral](rules/language_and_style.md)
+- [Convenções de Código (Python)](rules/coding_conventions.md)
+- [Convenções de Documentação](rules/documentation_conventions.md)
+- [Exceções de Pastas](rules/folder_exceptions.md)
 
-- **Idioma de Resposta:** Sempre responda em português do Brasil.
-- **Operações Git:** Sempre que for solicitado a realizar operações Git (como commit, pull, push, etc.), execute o script `powershell.exe -ExecutionPolicy Bypass -File .\commands\git_auto_commit.ps1` em vez de comandos Git individuais.
-- **Pasta 'temp':** A pasta `temp` nunca deve ser considerada para absolutamente NADA (leitura, escrita, inclusão em operações Git, etc.).
+## 4. Instruções para IAs
+
+Note que existem arquivos específicos para diferentes modelos (`gemini_...`, `dpseek_...`, `gpt_...`). Ao gerar novas instruções, siga este padrão.
+
+## 5. Instruções Específicas para o Gemini
+
 - Ao gerar código Python, siga as convenções encontradas nos arquivos da pasta `help/`.
 - Ao gerar documentação, siga o estilo dos arquivos `.md` existentes.
 - Ao ser solicitado para criar um fluxo ou diagrama, gere o código em formato Mermaid (`.mmd`).
