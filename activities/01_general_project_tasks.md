@@ -57,7 +57,7 @@ Esta lista de verificação abrange tarefas gerais e administrativas para a gest
     3.3.2. [x] Testes automatizados executados regularmente.
         *   **Evidência de Conclusão:** Logs de execução de testes automatizados.
 
-## 4. Encerramento do Projeto (se aplicável)
+## 4. Encerramento do Projeto (se aplicável).
 
 4.1. **Entrega:**
     4.1.1. [x] Todos os entregáveis concluídos e aprovados.
