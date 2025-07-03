@@ -4,29 +4,15 @@ Esta lista de verificação abrange tarefas gerais e administrativas para a gest
 
 ## 1. Gestão de Projeto
 
-1.1. **Planejamento:**
-    1.1.1. [x] Escopo do projeto definido e comunicado.
-        *   **Evidência de Conclusão:** Conteúdo da seção "1. Sobre o Projeto" em `docs/gemini.md`.
-    1.1.2. [x] Marcos e prazos estabelecidos.
-        *   **Evidência de Conclusão:** Documento de planejamento de marcos e prazos ([marcos_prazos.md](marcos_prazos/2025_07_02_21_00_00/marcos_prazos.md)).
-    1.1.3. [x] Recursos (humanos, técnicos) alocados.
-        *   **Evidência de Conclusão:** Documento de alocação de recursos ([alocacao_recursos.md](recursos_alocados/2025_07_02_21_00_00/alocacao_recursos.md)).
-1.2. **Comunicação:**
-    1.2.1. [x] Reuniões regulares agendadas (se aplicável).
-        *   **Evidência de Conclusão:** Calendário de reuniões ou atas de reunião ([reunioes_agendadas.md](reunioes_agendadas/2025_07_02_21_00_00/reunioes_agendadas.md)).
-    1.2.2. [x] Canais de comunicação definidos.
-        *   **Evidência de Conclusão:** Documento descrevendo os canais de comunicação ([canais_comunicacao.md](canais_comunicacao/2025_07_02_21_00_00/canais_comunicacao.md)).
-    1.2.3. [x] Status do projeto comunicado às partes interessadas.
-        *   **Evidência de Conclusão:** Relatórios de status ou e-mails de comunicação ([status_report.md](status_projeto/2025_07_02_21_00_00/status_report.md)).
-1.3. **Riscos:**
-    1.3.1. [x] Riscos identificados e avaliados.
+1.1. **Riscos:**
+    1.1.1. [x] Riscos identificados e avaliados.
         *   **Evidência de Conclusão:** Registro de riscos ([registro_riscos.md](registro_riscos/2025_07_02_21_00_00/registro_riscos.md)).
-    1.3.2. [x] Planos de mitigação desenvolvidos.
+    1.1.2. [x] Planos de mitigação desenvolvidos.
         *   **Evidência de Conclusão:** Documento de planos de mitigação ([planos_mitigacao.md](planos_mitigacao/2025_07_02_21_00_00/planos_mitigacao.md)).
-1.4. **Feedback:**
-    1.4.1. [x] Mecanismos para coletar feedback estabelecidos.
+1.2. **Feedback:**
+    1.2.1. [x] Mecanismos para coletar feedback estabelecidos.
         *   **Evidência de Conclusão:** Documento descrevendo os mecanismos de feedback ([mecanismos_feedback.md](mecanismos_feedback/2025_07_02_21_00_00/mecanismos_feedback.md)).
-    1.4.2. [x] Feedback revisado e incorporado (se aplicável).
+    1.2.2. [x] Feedback revisado e incorporado (se aplicável).
         *   **Evidência de Conclusão:** Registro de feedback e ações tomadas ([feedback_log.md](feedback_incorporado/2025_07_02_21_00_00/feedback_log.md)).
 
 ## 2. Manutenção e Operações
