@@ -32,5 +32,5 @@ Note que existem arquivos específicos para diferentes modelos (`gemini_...`, `d
 
 - Ao gerar documentação, siga o estilo dos arquivos `.md` existentes.
 - Ao ser solicitado para criar um fluxo ou diagrama, gere o código em formato Mermaid (`.mmd`).
-- Após cada alteração bem-sucedida (criação, modificação ou exclusão de arquivos), adicione os arquivos ao stage do Git, crie um commit com uma mensagem descritiva e execute o push para o repositório remoto.
+- - **Operações Git:** Após **FINALIZAR TODAS** as alterações (criação, modificação ou exclusão de diversos arquivos), execute o script `powershell.exe -ExecutionPolicy Bypass -File .\commands\git_auto_commit.ps1`. Não é necessário executar após cada alteração individual; aguarde o final de todas as alterações para executar.
 - Sempre guarde todas as execuções no arquivo de log_yyyy_mm_dd_hh_MM_ss.txt
