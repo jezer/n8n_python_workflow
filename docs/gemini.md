@@ -22,6 +22,7 @@ Para detalhes sobre as convenções e regras do projeto, consulte os arquivos na
 - [Regras de Idioma e Estilo Geral](rules/language_and_style.md)
 - [Convenções de Código (Python)](rules/coding_conventions.md)
 - [Convenções de Documentação](rules/documentation_conventions.md)
+- [Regras de Gestão de Atividades](rules/activity_management.md)
 - [Exceções de Pastas](rules/folder_exceptions.md)
 
 ## 4. Instruções para IAs
