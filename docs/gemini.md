@@ -24,10 +24,12 @@ Para detalhes sobre as convenções e regras do projeto, consulte os arquivos na
 - [Convenções de Documentação](rules/documentation_conventions.md)
 - [Exceções de Pastas](rules/folder_exceptions.md)
 
+## 4. Instruções para IAs
 
-## 4. Instruções Específicas para o Gemini
+Note que existem arquivos específicos para diferentes modelos (`gemini_...`, `dpseek_...`, `gpt_...`). Ao gerar novas instruções, siga este padrão.
 
-- Ao gerar código Python, siga as convenções encontradas nos arquivos da pasta `help/`.
+## 5. Instruções Específicas para o Gemini
+
 - Ao gerar documentação, siga o estilo dos arquivos `.md` existentes.
 - Ao ser solicitado para criar um fluxo ou diagrama, gere o código em formato Mermaid (`.mmd`).
 - Após cada alteração bem-sucedida (criação, modificação ou exclusão de arquivos), adicione os arquivos ao stage do Git, crie um commit com uma mensagem descritiva e execute o push para o repositório remoto.
