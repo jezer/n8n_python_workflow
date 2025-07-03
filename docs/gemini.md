@@ -33,5 +33,5 @@ Note que existem arquivos específicos para diferentes modelos (`gemini_...`, `d
 
 - Ao gerar documentação, siga o estilo dos arquivos `.md` existentes.
 - Ao ser solicitado para criar um fluxo ou diagrama, gere o código em formato Mermaid (`.mmd`).
-- **Operações Git:** Após **FINALIZAR TODAS** as alterações (criação, modificação ou exclusão de diversos arquivos), execute o script `powershell.exe -ExecutionPolicy Bypass -File .\commands\git_auto_commit.ps1`. Não é necessário executar após cada alteração individual; aguarde o final de todas as alterações para executar.
+- **Operações Git:** Sempre que houver alterações a serem comitadas (criação, modificação ou exclusão de arquivos), execute o script `powershell.exe -ExecutionPolicy Bypass -File .\commands\git_auto_commit.ps1`. **NÃO** execute comandos Git individuais (`git add`, `git commit`, `git push`) manualmente, mesmo que o script `git_auto_commit.ps1` não realize o commit devido à sua lógica interna de tempo. O script é o único responsável por gerenciar as operações Git no momento adequado.
 - Sempre guarde todas as execuções no arquivo de log_yyyy_mm_dd_hh_MM_ss.txt
