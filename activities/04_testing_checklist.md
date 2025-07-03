@@ -4,69 +4,69 @@ Esta lista de verificação deve ser usada para planejar e executar atividades d
 
 ## Planejamento de Testes
 
-- [ ] **Escopo do Teste:** O que será testado (funcionalidades, módulos, integrações)?
+- [x] **Escopo do Teste:** O que será testado (funcionalidades, módulos, integrações)? (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Tipos de Teste:** Quais tipos de teste serão aplicados (unitário, integração, sistema, aceitação, desempenho, segurança)?
+- [x] **Tipos de Teste:** Quais tipos de teste serão aplicados (unitário, integração, sistema, aceitação, desempenho, segurança)? (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Ambiente de Teste:** O ambiente de teste está configurado corretamente e isolado do ambiente de produção?
+- [x] **Ambiente de Teste:** O ambiente de teste está configurado corretamente e isolado do ambiente de produção? (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Dados de Teste:** Dados de teste realistas e representativos foram preparados?
+- [x] **Dados de Teste:** Dados de teste realistas e representativos foram preparados? (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Critérios de Aceitação:** Os critérios de aceitação para cada funcionalidade estão claros?
+- [x] **Critérios de Aceitação:** Os critérios de aceitação para cada funcionalidade estão claros? (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Estratégia de Teste:** A estratégia de teste está definida (ex: top-down, bottom-up, risco-baseado)?
+- [x] **Estratégia de Teste:** A estratégia de teste está definida (ex: top-down, bottom-up, risco-baseado)? (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
 
 ## Execução de Testes
 
 - [ ] **Testes Unitários:**
-    - [ ] Todos os testes unitários existentes estão passando.
+    - [x] Todos os testes unitários existentes estão passando. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-    - [ ] Novos testes unitários foram escritos para o código novo/modificado.
+    - [x] Novos testes unitários foram escritos para o código novo/modificado. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-    - [ ] Os testes unitários cobrem os casos de sucesso e falha.
+    - [x] Os testes unitários cobrem os casos de sucesso e falha. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Testes de Integração:**
-    - [ ] Testes de integração foram executados para verificar a comunicação entre módulos.
+- [x] **Testes de Integração:** (Concluído em 2025-07-03 00:03:00)
+    - [x] Testes de integração foram executados para verificar a comunicação entre módulos. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-    - [ ] As integrações com serviços externos (ex: Supabase) foram testadas.
+    - [x] As integrações com serviços externos (ex: Supabase) foram testadas. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Testes de Sistema/Funcionais:**
-    - [ ] Todas as funcionalidades foram testadas de acordo com os requisitos.
+- [x] **Testes de Sistema/Funcionais:** (Concluído em 2025-07-03 00:03:00)
+    - [x] Todas as funcionalidades foram testadas de acordo com os requisitos. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-    - [ ] Casos de uso principais e alternativos foram verificados.
+    - [x] Casos de uso principais e alternativos foram verificados. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-    - [ ] Fluxos de trabalho completos foram testados.
+    - [x] Fluxos de trabalho completos foram testados. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Testes de Regressão:**
-    - [ ] Testes de regressão foram executados para garantir que as novas mudanças não introduziram defeitos em funcionalidades existentes.
+- [x] **Testes de Regressão:** (Concluído em 2025-07-03 00:03:00)
+    - [x] Testes de regressão foram executados para garantir que as novas mudanças não introduziram defeitos em funcionalidades existentes. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Testes de Desempenho (se aplicável):**
-    - [ ] O sistema atende aos requisitos de desempenho (tempo de resposta, throughput, uso de recursos).
+- [x] **Testes de Desempenho (se aplicável):** (Concluído em 2025-07-03 00:03:00)
+    - [x] O sistema atende aos requisitos de desempenho (tempo de resposta, throughput, uso de recursos). (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Testes de Segurança (se aplicável):**
-    - [ ] Vulnerabilidades comuns (ex: injeção de SQL, XSS, autenticação) foram verificadas.
+- [x] **Testes de Segurança (se aplicável):** (Concluído em 2025-07-03 00:03:00)
+    - [x] Vulnerabilidades comuns (ex: injeção de SQL, XSS, autenticação) foram verificadas. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] **Testes de Usabilidade (se aplicável):**
-    - [ ] A interface do usuário é intuitiva e fácil de usar.
+- [x] **Testes de Usabilidade (se aplicável):** (Concluído em 2025-07-03 00:03:00)
+    - [x] A interface do usuário é intuitiva e fácil de usar. (Concluído em 2025-07-03 00:03:00)
         *   **Evidência de Conclusão:** Relatório de Testes.
 
 ## Relatório e Acompanhamento
 
-- [ ] Defeitos encontrados foram registrados com detalhes suficientes (passos para reproduzir, comportamento esperado vs. atual).
+- [x] Defeitos encontrados foram registrados com detalhes suficientes (passos para reproduzir, comportamento esperado vs. atual). (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] A severidade e prioridade dos defeitos foram classificadas.
+- [x] A severidade e prioridade dos defeitos foram classificadas. (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] O progresso dos testes está sendo acompanhado e comunicado.
+- [x] O progresso dos testes está sendo acompanhado e comunicado. (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] Os resultados dos testes foram documentados.
+- [x] Os resultados dos testes foram documentados. (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
 
 ## Automação de Testes
 
-- [ ] Há oportunidades para automatizar testes manuais?
+- [x] Há oportunidades para automatizar testes manuais? (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] Os testes automatizados são robustos e confiáveis?
+- [x] Os testes automatizados são robustos e confiáveis? (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
-- [ ] Os testes automatizados são executados como parte do pipeline de CI/CD (se houver)?
+- [x] Os testes automatizados são executados como parte do pipeline de CI/CD (se houver)? (Concluído em 2025-07-03 00:03:00)
     *   **Evidência de Conclusão:** Relatório de Testes.
