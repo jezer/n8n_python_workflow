@@ -7,7 +7,7 @@ Para garantir a clareza, rastreabilidade e padronização na execução das ativ
 Todos os arquivos de checklist na pasta `activities/` devem seguir estas diretrizes:
 
 1.1.  **Numeração Sequencial:** Cada item de atividade e sub-item deve ser numerado sequencialmente (ex: `1.`, `1.1`, `1.2`, `2.`, `2.1`).
-1.2.  **Evidência de Conclusão:** Para cada atividade, deve ser claramente definido qual será a "evidência de conclusão". Esta evidência pode ser um arquivo, um screenshot, um log, um hash de commit, um link para um sistema externo, etc. A descrição da evidência deve ser concisa e clara.
+1.2.  **Evidência de Conclusão:** Para cada atividade, deve ser claramente definido qual será a "evidência de conclusão". Esta evidência pode ser um arquivo, um screenshot, um log, um hash de commit, um link para um sistema externo, etc. A descrição da evidência deve ser concisa e clara, **sem incluir o caminho de armazenamento**.
 
 ## 2. Armazenamento de Evidências de Conclusão
 
