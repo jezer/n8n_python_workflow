@@ -2,7 +2,7 @@ $lastGitCommandDateString = Get-Content -Path "C:\source\IATextHelp\n8n_python_w
 $lastGitCommandDate = [datetime]::ParseExact($lastGitCommandDateString.Trim(), "yyyy-MM-dd HH:mm:ss", $null)
 $currentDate = Get-Date
 
-if ($currentDate -lt $lastGitCommandDate) {
+if ($currentDate -ge $lastGitCommandDate) {
     git pull
     git add .
     $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
@@ -14,5 +14,5 @@ if ($currentDate -lt $lastGitCommandDate) {
     Set-Content -Path "C:\source\IATextHelp\n8n_python_workflow\commands\lastGitCommand.md" -Value $newExecutionDate
     Write-Host "Updated lastGitCommand.md with next execution time: $newExecutionDate"
 } else {
-    Write-Host "Execution date in lastGitCommand.md has passed. Not executing git commands."
+    Write-Host "Execution date in lastGitCommand.md has not yet been reached. Not executing git commands."
 }
